@@ -1,0 +1,11 @@
+import { access, readFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
+const root = resolve(import.meta.dirname, '..');
+const required = ['index.html','privacy.html','terms.html','success.html','404.html','robots.txt','sitemap.xml','netlify.toml','assets/styles.css','assets/favicon.svg','assets/social-card.svg'];
+for (const file of required) await access(resolve(root, file));
+const css = await readFile(resolve(root, 'assets/styles.css'), 'utf8');
+if (!css.includes('@media (prefers-reduced-motion:reduce)')) throw new Error('Missing reduced-motion support');
+if (!css.includes(':focus-visible')) throw new Error('Missing focus-visible support');
+const index = await readFile(resolve(root, 'index.html'), 'utf8');
+if ((index.match(/<h1\b/gi) || []).length !== 1) throw new Error('Homepage must have exactly one h1');
+console.log(`Static checks passed: ${required.length} required files, one homepage h1, accessibility guards present.`);

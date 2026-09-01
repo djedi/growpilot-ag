@@ -1,0 +1,12 @@
+{
+  "name": "growpilot-ag",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static early-access landing page for GrowPilot AI.",
+  "scripts": {
+    "test": "node --test scripts/site.test.mjs",
+    "check": "node scripts/check-site.mjs",
+    "serve": "python3 -m http.server 8080"
+  },
+  "engines": { "node": ">=20" }
+}
